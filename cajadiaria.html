@@ -77,14 +77,16 @@ body { background: var(--fondo); color: var(--texto); font-family: 'Syne', sans-
 
 /* CHECKBOX */
 .mov-check {
-width: 24px; height: 24px; border-radius: 7px;
-border: 2px solid var(–borde); background: var(–panel2);
+width: 32px; height: 32px; border-radius: 9px;
+border: 2.5px solid #556070; background: #1E2733;
 display: flex; align-items: center; justify-content: center;
 cursor: pointer; flex-shrink: 0; transition: all 0.2s;
-font-size: 14px; color: transparent; user-select: none;
+font-size: 18px; color: transparent; user-select: none;
+box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
 }
 .mov-check.checked {
 background: var(–verde); border-color: var(–verde); color: #fff;
+box-shadow: 0 0 8px rgba(0,194,124,0.4);
 }
 
 .mov-icono { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
