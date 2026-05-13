@@ -7,15 +7,14 @@
 <title>Caja Diaria</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --verde: #00C27C; --verde-oscuro: #009960; --rojo: #FF4D5A;
-    --oro: #FFD84D; --fondo: #0D1117; --panel: #161C26;
-    --panel2: #1E2733; --borde: #2A3340; --texto: #E8EDF3; --gris: #8A96A3;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--fondo); color: var(--texto); font-family: 'Syne', sans-serif; min-height: 100vh; padding: 16px 16px 40px; }
+:root {
+--verde: #00C27C; --verde-oscuro: #009960; --rojo: #FF4D5A;
+--oro: #FFD84D; --fondo: #0D1117; --panel: #161C26;
+--panel2: #1E2733; --borde: #2A3340; --texto: #E8EDF3; --gris: #8A96A3;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--fondo); color: var(--texto); font-family: 'Syne', sans-serif; min-height: 100vh; padding: 16px 16px 40px; }
 
-/* SYNC BAR */
 .sync-bar { display: flex; align-items: center; gap: 8px; background: var(–panel); border: 1px solid var(–borde); border-radius: 10px; padding: 8px 12px; margin-bottom: 16px; font-size: 11px; font-family: ‘DM Mono’, monospace; }
 .sync-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .sync-dot.ok { background: var(–verde); }
@@ -71,9 +70,17 @@
 .btn-cerrar { width: 100%; padding: 13px; border-radius: 12px; border: none; background: linear-gradient(135deg, #FF4D5A, #CC2233); color: #fff; font-size: 14px; font-weight: 700; font-family: ‘Syne’, sans-serif; cursor: pointer; margin-bottom: 16px; }
 .btn-abrir { width: 100%; padding: 13px; border-radius: 12px; border: none; background: linear-gradient(135deg, #FFD84D, #FF9500); color: #0D1117; font-size: 14px; font-weight: 800; font-family: ‘Syne’, sans-serif; cursor: pointer; margin-bottom: 16px; }
 
+/* MOVIMIENTO */
 .movimientos-title { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(–gris); margin-bottom: 10px; }
-.movimiento { background: var(–panel); border: 1px solid var(–borde); border-radius: 13px; padding: 12px 13px; margin-bottom: 7px; display: flex; align-items: center; gap: 10px; animation: slideIn 0.2s ease; }
+.movimiento { background: var(–panel); border: 1px solid var(–borde); border-radius: 13px; padding: 12px 13px; margin-bottom: 7px; display: flex; align-items: center; gap: 10px; animation: slideIn 0.2s ease; transition: background 0.3s, border-color 0.3s; position: relative; }
+.movimiento.procesado { background: rgba(0,194,124,0.08); border-color: rgba(0,194,124,0.35); }
 @keyframes slideIn { from{opacity:0;transform:translateY(-5px)} to{opacity:1;transform:translateY(0)} }
+
+/* CHECKBOX */
+.mov-check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(–borde); background: var(–panel2); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all 0.2s; font-size: 13px; }
+.mov-check.checked { background: var(–verde); border-color: var(–verde); }
+.procesado-label { position: absolute; top: 6px; right: 36px; font-size: 9px; color: var(–verde); font-family: ‘DM Mono’, monospace; letter-spacing: 1px; font-weight: 700; }
+
 .mov-icono { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
 .mov-icono.entrada { background: rgba(0,194,124,0.15); }
 .mov-icono.salida { background: rgba(255,77,90,0.15); }
@@ -84,11 +91,18 @@
 .mov-monto { font-size: 14px; font-weight: 700; font-family: ‘DM Mono’, monospace; white-space: nowrap; }
 .mov-monto.entrada { color: var(–verde); } .mov-monto.salida { color: var(–rojo); } .mov-monto.inicio { color: var(–oro); }
 .mov-saldo { font-size: 10px; color: var(–gris); font-family: ‘DM Mono’, monospace; white-space: nowrap; }
-.btn-del { background: none; border: none; color: #3A4555; font-size: 15px; cursor: pointer; padding: 3px; transition: color 0.2s; }
+
+/* ACCIONES MOVIMIENTO */
+.mov-acciones { display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
+.btn-del { background: none; border: none; color: #3A4555; font-size: 14px; cursor: pointer; padding: 2px; transition: color 0.2s; }
 .btn-del:hover { color: var(–rojo); }
+.btn-ticket { background: none; border: none; color: #3A4555; font-size: 14px; cursor: pointer; padding: 2px; transition: color 0.2s; }
+.btn-ticket:hover { color: var(–oro); }
+
 .vacio { text-align: center; padding: 28px 16px; color: var(–gris); font-size: 13px; }
 .vacio .emoji { font-size: 34px; margin-bottom: 8px; }
 
+/* HISTORIAL */
 .hist-title { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(–gris); margin-bottom: 14px; }
 .dia-card { background: var(–panel); border: 1px solid var(–borde); border-radius: 16px; margin-bottom: 12px; overflow: hidden; }
 .dia-head { padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
@@ -104,7 +118,10 @@
 .dia-mov-monto { font-size: 12px; font-weight: 700; font-family: ‘DM Mono’, monospace; }
 .dia-stats { display: flex; gap: 14px; padding: 10px 16px; border-top: 1px solid var(–borde); background: var(–panel2); flex-wrap: wrap; }
 .dia-stat { font-size: 11px; font-family: ‘DM Mono’, monospace; }
+.btn-print-dia { background: none; border: 1px solid var(–borde); border-radius: 8px; padding: 5px 10px; color: var(–gris); font-size: 11px; font-family: ‘Syne’, sans-serif; cursor: pointer; margin-left: auto; }
+.btn-print-dia:hover { color: var(–oro); border-color: var(–oro); }
 
+/* MODAL */
 .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.82); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
 .modal { background: var(–panel); border: 1px solid var(–borde); border-radius: 20px; padding: 26px 22px; width: 100%; max-width: 360px; }
 .modal h2 { font-size: 20px; font-weight: 800; margin-bottom: 5px; }
@@ -118,418 +135,480 @@
 .info-box { background: var(–panel2); border-radius: 10px; padding: 11px 13px; margin-bottom: 14px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
 .info-box strong { color: var(–oro); font-family: ‘DM Mono’, monospace; font-size: 16px; }
 
-/* LOADING SCREEN */
 .loading-screen { position: fixed; inset: 0; background: var(–fondo); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 200; gap: 16px; }
 .loading-logo { width: 64px; height: 64px; background: linear-gradient(135deg, #FFD84D, #FF9500); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 32px; animation: bounce 1s infinite; }
 @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 .loading-txt { font-size: 14px; color: var(–gris); font-family: ‘DM Mono’, monospace; }
+
+/* TICKET PRINT */
+@media print {
+body * { visibility: hidden; }
+#ticketPrint, #ticketPrint * { visibility: visible; }
+#ticketPrint { position: fixed; left: 0; top: 0; width: 80mm; }
+}
+#ticketPrint {
+display: none;
+font-family: ‘DM Mono’, monospace;
+font-size: 12px;
+color: #000;
+background: #fff;
+padding: 12px;
+width: 80mm;
+border: 1px dashed #ccc;
+border-radius: 8px;
+}
+.ticket-header { text-align: center; border-bottom: 1px dashed #ccc; padding-bottom: 8px; margin-bottom: 8px; }
+.ticket-header h2 { font-size: 16px; font-weight: 800; margin-bottom: 2px; }
+.ticket-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.ticket-row.total { border-top: 1px dashed #ccc; padding-top: 6px; margin-top: 4px; font-weight: 700; font-size: 14px; }
+.ticket-footer { text-align: center; border-top: 1px dashed #ccc; padding-top: 8px; margin-top: 8px; font-size: 10px; color: #666; }
 </style>
 
 </head>
 <body>
 
+<!-- TICKET (oculto, solo para imprimir) -->
+
+<div id="ticketPrint"></div>
+
 <!-- LOADING -->
 
 <div class="loading-screen" id="loadingScreen">
-  <div class="loading-logo">💵</div>
-  <div class="loading-txt">Cargando datos...</div>
+<div class="loading-logo">💵</div>
+<div class="loading-txt">Cargando datos...</div>
 </div>
 
 <!-- MODAL APERTURA -->
 
 <div class="overlay" id="modalApertura" style="display:none">
-  <div class="modal">
-    <div style="font-size:34px;margin-bottom:10px;">💰</div>
-    <h2 id="modalTitulo">Abrir Caja</h2>
-    <p class="sub" id="modalSub">Ingresa el monto inicial y la fecha.</p>
-    <div id="infoAnterior" style="display:none" class="info-box">
-      <span>Saldo anterior</span>
-      <strong id="saldoAntVal"></strong>
-    </div>
-    <span class="lbl">Fecha de apertura</span>
-    <input type="date" id="fechaAp" class="sm">
-    <span class="lbl" id="lblMonto">Monto inicial</span>
-    <input type="number" id="montoAp" placeholder="0.00" step="0.01" min="0">
-    <button class="btn-ok" id="btnAbrirOk" onclick="confirmarApertura()">Abrir Caja 🔓</button>
-  </div>
+<div class="modal">
+<div style="font-size:34px;margin-bottom:10px;">💰</div>
+<h2 id="modalTitulo">Abrir Caja</h2>
+<p class="sub" id="modalSub">Ingresa el monto inicial y la fecha.</p>
+<div id="infoAnterior" style="display:none" class="info-box">
+<span>Saldo anterior</span>
+<strong id="saldoAntVal"></strong>
+</div>
+<span class="lbl">Fecha de apertura</span>
+<input type="date" id="fechaAp" class="sm">
+<span class="lbl" id="lblMonto">Monto inicial</span>
+<input type="number" id="montoAp" placeholder="0.00" step="0.01" min="0">
+<button class="btn-ok" id="btnAbrirOk" onclick="confirmarApertura()">Abrir Caja 🔓</button>
+</div>
 </div>
 
 <!-- HEADER -->
 
 <div class="header">
-  <div class="logo">💵</div>
-  <div class="header-text">
-    <h1>Caja Diaria</h1>
-    <p id="headerFecha">—</p>
-  </div>
+<div class="logo">💵</div>
+<div class="header-text">
+<h1>Caja Diaria</h1>
+<p id="headerFecha">—</p>
+</div>
 </div>
 
 <!-- SYNC BAR -->
 
 <div class="sync-bar">
-  <div class="sync-dot cargando" id="syncDot"></div>
-  <div class="sync-txt" id="syncTxt">Conectando con Google Sheets...</div>
-  <button class="sync-btn" onclick="sincronizar()">↺ Sync</button>
+<div class="sync-dot cargando" id="syncDot"></div>
+<div class="sync-txt" id="syncTxt">Conectando con Google Sheets...</div>
+<button class="sync-btn" onclick="sincronizar()">↺ Sync</button>
 </div>
 
 <!-- TABS -->
 
 <div class="tabs">
-  <button class="tab activo" id="tabHoy" onclick="irVista('hoy',this)">📋 Hoy</button>
-  <button class="tab" id="tabHist" onclick="irVista('historial',this)">📅 Historial</button>
+<button class="tab activo" id="tabHoy" onclick="irVista('hoy',this)">📋 Hoy</button>
+<button class="tab" id="tabHist" onclick="irVista('historial',this)">📅 Historial</button>
 </div>
 
 <!-- VISTA HOY -->
 
 <div class="vista activa" id="vistaHoy">
-  <div id="statusBadge" class="status-badge abierta"><div class="dot"></div><span id="statusTxt">CAJA ABIERTA</span></div>
+<div id="statusBadge" class="status-badge abierta"><div class="dot"></div><span id="statusTxt">CAJA ABIERTA</span></div>
 
-  <div class="saldo-card">
-    <div class="saldo-label">Saldo en Caja</div>
-    <div class="saldo-valor" id="saldoDisplay">$0.00</div>
-    <div class="saldo-sub" id="saldoSub">—</div>
-  </div>
+<div class="saldo-card">
+<div class="saldo-label">Saldo en Caja</div>
+<div class="saldo-valor" id="saldoDisplay">$0.00</div>
+<div class="saldo-sub" id="saldoSub">—</div>
+</div>
 
-  <div class="mini-stats">
-    <div class="stat"><div class="stat-icon">🟢</div><div class="stat-val verde" id="totalEntradas">$0.00</div><div class="stat-lbl">Entradas</div></div>
-    <div class="stat"><div class="stat-icon">🔴</div><div class="stat-val rojo" id="totalSalidas">$0.00</div><div class="stat-lbl">Salidas</div></div>
-    <div class="stat"><div class="stat-icon">📋</div><div class="stat-val oro" id="totalMovs">0</div><div class="stat-lbl">Movs.</div></div>
-  </div>
+<div class="mini-stats">
+<div class="stat"><div class="stat-icon">🟢</div><div class="stat-val verde" id="totalEntradas">$0.00</div><div class="stat-lbl">Entradas</div></div>
+<div class="stat"><div class="stat-icon">🔴</div><div class="stat-val rojo" id="totalSalidas">$0.00</div><div class="stat-lbl">Salidas</div></div>
+<div class="stat"><div class="stat-icon">📋</div><div class="stat-val oro" id="totalMovs">0</div><div class="stat-lbl">Movs.</div></div>
+</div>
 
-  <div id="seccionForm">
-    <div class="form-card">
-      <div class="form-title">+ Nuevo Movimiento</div>
-      <div class="tipo-toggle">
-        <button class="tipo-btn entrada activo" id="btnEntrada" onclick="setTipo('entrada')">⬆️ Entrada</button>
-        <button class="tipo-btn salida" id="btnSalida" onclick="setTipo('salida')">⬇️ Salida</button>
-      </div>
-      <div class="campo"><label>Descripción</label><input type="text" id="descInput" placeholder="Ej: Venta, pago proveedor..."></div>
-      <div class="campo"><label>Monto</label><input type="number" id="montoInput" placeholder="0.00" step="0.01" min="0"></div>
-      <button class="btn-agregar" id="btnAgregar" onclick="agregar()">Agregar Movimiento</button>
-    </div>
-    <button class="btn-cerrar" onclick="cerrarDia()">🔒 Cerrar Caja del Día</button>
-  </div>
+<div id="seccionForm">
+<div class="form-card">
+<div class="form-title">+ Nuevo Movimiento</div>
+<div class="tipo-toggle">
+<button class="tipo-btn entrada activo" id="btnEntrada" onclick="setTipo('entrada')">⬆️ Entrada</button>
+<button class="tipo-btn salida" id="btnSalida" onclick="setTipo('salida')">⬇️ Salida</button>
+</div>
+<div class="campo"><label>Descripción</label><input type="text" id="descInput" placeholder="Ej: Venta, pago proveedor..."></div>
+<div class="campo"><label>Monto</label><input type="number" id="montoInput" placeholder="0.00" step="0.01" min="0"></div>
+<button class="btn-agregar" id="btnAgregar" onclick="agregar()">Agregar Movimiento</button>
+</div>
+<button class="btn-cerrar" onclick="cerrarDia()">🔒 Cerrar Caja del Día</button>
+</div>
 
-  <div id="seccionCerrada" style="display:none">
-    <button class="btn-abrir" onclick="abrirNuevoDia()">🔓 Abrir Caja — Día Siguiente</button>
-  </div>
+<div id="seccionCerrada" style="display:none">
+<button class="btn-abrir" onclick="abrirNuevoDia()">🔓 Abrir Caja — Día Siguiente</button>
+</div>
 
-  <div class="movimientos-title">Movimientos del Día</div>
-  <div id="listaMovimientos"></div>
+<div class="movimientos-title">Movimientos del Día</div>
+<div id="listaMovimientos"></div>
 </div>
 
 <!-- VISTA HISTORIAL -->
 
 <div class="vista" id="vistaHistorial">
-  <div class="hist-title">Historial de Días</div>
-  <div id="listaHistorial"></div>
-  <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--borde)">
-    <button onclick="confirmarReset()" style="background:none;border:1px solid var(--borde);border-radius:10px;padding:10px 16px;color:var(--gris);font-size:12px;font-family:'Syne',sans-serif;cursor:pointer;width:100%;">↺ Reiniciar todo</button>
-  </div>
+<div class="hist-title">Historial de Días</div>
+<div id="listaHistorial"></div>
+<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--borde)">
+<button onclick="confirmarReset()" style="background:none;border:1px solid var(--borde);border-radius:10px;padding:10px 16px;color:var(--gris);font-size:12px;font-family:'Syne',sans-serif;cursor:pointer;width:100%;">↺ Reiniciar todo</button>
+</div>
 </div>
 
 <script>
-// ══════════════════════════════════════════
-//  CONFIG — tus datos de Google
-// ══════════════════════════════════════════
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyx7ZA1pkRzLLD4IXJPYYXbawfNIi4u06Rc7qLym1gNB7dVPWOP6BzkW2hfjip-prrM/exec';
-const SHEET_ID   = '1-KO3dSDxs5YdTNNgDCuLaBaulh4yuybwnmtRymxV6BI';
+const SHEET_ID = '1-KO3dSDxs5YdTNNgDCuLaBaulh4yuybwnmtRymxV6BI';
 
-// ══════════════════════════════════════════
 let estado = null;
 let tipoActual = 'entrada';
 let guardando = false;
 
-// ── INIT ──────────────────────────────────
 window.onload = async () => {
-  document.getElementById('fechaAp').value = hoy();
-  await cargarDesdeSheets();
+document.getElementById('fechaAp').value = hoy();
+await cargarDesdeSheets();
 };
 
-// ── GOOGLE SHEETS ─────────────────────────
 async function cargarDesdeSheets() {
-  setSyncEstado('cargando', 'Cargando datos...');
-  try {
-    const res = await fetch(`${SCRIPT_URL}?sheetId=${SHEET_ID}`);
-    const data = await res.json();
-    estado = data.estado || null;
-    setSyncEstado('ok', 'Sincronizado con Google Sheets ✓');
-  } catch(e) {
-    // fallback a localStorage
-    estado = JSON.parse(localStorage.getItem('cajaEstado3') || 'null');
-    setSyncEstado('error', 'Sin conexión — usando datos locales');
-  }
-  document.getElementById('loadingScreen').style.display = 'none';
-  if (!estado) {
-    document.getElementById('modalApertura').style.display = 'flex';
-  } else {
-    render();
-  }
+setSyncEstado('cargando', 'Cargando datos...');
+try {
+const res = await fetch(`${SCRIPT_URL}?sheetId=${SHEET_ID}`);
+const data = await res.json();
+estado = data.estado || null;
+setSyncEstado('ok', 'Sincronizado con Google Sheets ✓');
+} catch(e) {
+estado = JSON.parse(localStorage.getItem('cajaEstado3') || 'null');
+setSyncEstado('error', 'Sin conexión — usando datos locales');
+}
+document.getElementById('loadingScreen').style.display = 'none';
+if (!estado) {
+document.getElementById('modalApertura').style.display = 'flex';
+} else {
+render();
+}
 }
 
 async function guardarEnSheets() {
-  if (guardando) return;
-  guardando = true;
-  setSyncEstado('cargando', 'Guardando...');
-  // siempre guardar local también
-  localStorage.setItem('cajaEstado3', JSON.stringify(estado));
-  try {
-    await fetch(SCRIPT_URL, {
-      method: 'POST',
-      body: JSON.stringify({ sheetId: SHEET_ID, action: 'save', estado }),
-    });
-    setSyncEstado('ok', 'Guardado en Google Sheets ✓');
-  } catch(e) {
-    setSyncEstado('error', 'Error al guardar — datos guardados localmente');
-  }
-  guardando = false;
+if (guardando) return;
+guardando = true;
+setSyncEstado('cargando', 'Guardando...');
+localStorage.setItem('cajaEstado3', JSON.stringify(estado));
+try {
+await fetch(SCRIPT_URL, {
+method: 'POST',
+body: JSON.stringify({ sheetId: SHEET_ID, action: 'save', estado }),
+});
+setSyncEstado('ok', 'Guardado en Google Sheets ✓');
+} catch(e) {
+setSyncEstado('error', 'Error al guardar — guardado localmente');
+}
+guardando = false;
 }
 
 async function sincronizar() {
-  await cargarDesdeSheets();
-  render();
+await cargarDesdeSheets();
+render();
 }
 
 function setSyncEstado(tipo, txt) {
-  const dot = document.getElementById('syncDot');
-  dot.className = 'sync-dot ' + tipo;
-  document.getElementById('syncTxt').textContent = txt;
+document.getElementById('syncDot').className = 'sync-dot ' + tipo;
+document.getElementById('syncTxt').textContent = txt;
 }
 
-// ── HELPERS ───────────────────────────────
 function hoy() { return new Date().toISOString().split('T')[0]; }
-
 function getSaldo() {
-  if (!estado || !estado.movimientos.length) return 0;
-  return estado.movimientos[estado.movimientos.length - 1].saldo;
+if (!estado || !estado.movimientos.length) return 0;
+return estado.movimientos[estado.movimientos.length - 1].saldo;
 }
-
 function fmt(n) {
-  return (n < 0 ? '-' : '') + '$' + Math.abs(n).toLocaleString('es', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+return (n < 0 ? '-' : '') + '$' + Math.abs(n).toLocaleString('es', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
-
 function fmtF(f) {
-  if (!f) return '—';
-  const [y,m,d] = f.split('-');
-  const M = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  return `${d} ${M[parseInt(m)-1]} ${y}`;
+if (!f) return '—';
+const [y,m,d] = f.split('-');
+const M = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+return `${d} ${M[parseInt(m)-1]} ${y}`;
 }
 
-// ── APERTURA ──────────────────────────────
 function abrirNuevoDia() {
-  const saldo = getSaldo();
-  document.getElementById('modalTitulo').textContent = 'Nuevo Día';
-  document.getElementById('modalSub').textContent = 'El saldo anterior pasa como monto de apertura.';
-  document.getElementById('infoAnterior').style.display = 'flex';
-  document.getElementById('saldoAntVal').textContent = fmt(saldo);
-  document.getElementById('lblMonto').textContent = 'Monto de apertura';
-  document.getElementById('montoAp').value = saldo >= 0 ? saldo.toFixed(2) : '0.00';
-  document.getElementById('fechaAp').value = hoy();
-  document.getElementById('modalApertura').style.display = 'flex';
+const saldo = getSaldo();
+document.getElementById('modalTitulo').textContent = 'Nuevo Día';
+document.getElementById('modalSub').textContent = 'El saldo anterior pasa como monto de apertura.';
+document.getElementById('infoAnterior').style.display = 'flex';
+document.getElementById('saldoAntVal').textContent = fmt(saldo);
+document.getElementById('lblMonto').textContent = 'Monto de apertura';
+document.getElementById('montoAp').value = saldo >= 0 ? saldo.toFixed(2) : '0.00';
+document.getElementById('fechaAp').value = hoy();
+document.getElementById('modalApertura').style.display = 'flex';
 }
 
 async function confirmarApertura() {
-  const monto = parseFloat(document.getElementById('montoAp').value);
-  const fecha = document.getElementById('fechaAp').value;
-  if (isNaN(monto) || monto < 0) { alert('Ingresa un monto válido'); return; }
-  if (!fecha) { alert('Selecciona una fecha'); return; }
-
-  document.getElementById('btnAbrirOk').disabled = true;
-  document.getElementById('btnAbrirOk').textContent = 'Guardando...';
-
-  if (!estado) {
-    estado = { cajaAbierta: true, fechaActual: fecha, movimientos: [], historial: [] };
-  } else {
-    estado.cajaAbierta = true;
-    estado.fechaActual = fecha;
-    estado.movimientos = [];
-  }
-  estado.movimientos.push({ id: Date.now(), tipo: 'inicio', desc: 'Apertura de caja', monto, fecha, saldo: monto });
-
-  await guardarEnSheets();
-  document.getElementById('modalApertura').style.display = 'none';
-  document.getElementById('btnAbrirOk').disabled = false;
-  document.getElementById('btnAbrirOk').textContent = 'Abrir Caja 🔓';
-  render();
+const monto = parseFloat(document.getElementById('montoAp').value);
+const fecha = document.getElementById('fechaAp').value;
+if (isNaN(monto) || monto < 0) { alert('Ingresa un monto válido'); return; }
+if (!fecha) { alert('Selecciona una fecha'); return; }
+document.getElementById('btnAbrirOk').disabled = true;
+document.getElementById('btnAbrirOk').textContent = 'Guardando...';
+if (!estado) {
+estado = { cajaAbierta: true, fechaActual: fecha, movimientos: [], historial: [] };
+} else {
+estado.cajaAbierta = true;
+estado.fechaActual = fecha;
+estado.movimientos = [];
+}
+estado.movimientos.push({ id: Date.now(), tipo: 'inicio', desc: 'Apertura de caja', monto, fecha, saldo: monto, procesado: false });
+await guardarEnSheets();
+document.getElementById('modalApertura').style.display = 'none';
+document.getElementById('btnAbrirOk').disabled = false;
+document.getElementById('btnAbrirOk').textContent = 'Abrir Caja 🔓';
+render();
 }
 
-// ── TIPO ──────────────────────────────────
 function setTipo(t) {
-  tipoActual = t;
-  document.getElementById('btnEntrada').classList.toggle('activo', t === 'entrada');
-  document.getElementById('btnSalida').classList.toggle('activo', t === 'salida');
+tipoActual = t;
+document.getElementById('btnEntrada').classList.toggle('activo', t === 'entrada');
+document.getElementById('btnSalida').classList.toggle('activo', t === 'salida');
 }
 
-// ── AGREGAR ───────────────────────────────
 async function agregar() {
-  const desc = document.getElementById('descInput').value.trim();
-  const monto = parseFloat(document.getElementById('montoInput').value);
-  if (!desc) { alert('Ingresa una descripción'); return; }
-  if (isNaN(monto) || monto <= 0) { alert('Ingresa un monto válido'); return; }
-
-  const s = getSaldo();
-  const nuevoSaldo = tipoActual === 'entrada' ? s + monto : s - monto;
-  if (nuevoSaldo < 0 && !confirm('⚠️ Saldo quedaría negativo (' + fmt(nuevoSaldo) + '). ¿Continuar?')) return;
-
-  document.getElementById('btnAgregar').disabled = true;
-  document.getElementById('btnAgregar').textContent = 'Guardando...';
-
-  estado.movimientos.push({ id: Date.now(), tipo: tipoActual, desc, monto, fecha: estado.fechaActual, saldo: nuevoSaldo });
-  await guardarEnSheets();
-  render();
-  document.getElementById('descInput').value = '';
-  document.getElementById('montoInput').value = '';
-  document.getElementById('btnAgregar').disabled = false;
-  document.getElementById('btnAgregar').textContent = 'Agregar Movimiento';
+const desc = document.getElementById('descInput').value.trim();
+const monto = parseFloat(document.getElementById('montoInput').value);
+if (!desc) { alert('Ingresa una descripción'); return; }
+if (isNaN(monto) || monto <= 0) { alert('Ingresa un monto válido'); return; }
+const s = getSaldo();
+const nuevoSaldo = tipoActual === 'entrada' ? s + monto : s - monto;
+if (nuevoSaldo < 0 && !confirm('⚠️ Saldo quedaría negativo (' + fmt(nuevoSaldo) + '). ¿Continuar?')) return;
+document.getElementById('btnAgregar').disabled = true;
+document.getElementById('btnAgregar').textContent = 'Guardando...';
+estado.movimientos.push({ id: Date.now(), tipo: tipoActual, desc, monto, fecha: estado.fechaActual, saldo: nuevoSaldo, procesado: false });
+await guardarEnSheets();
+render();
+document.getElementById('descInput').value = '';
+document.getElementById('montoInput').value = '';
+document.getElementById('btnAgregar').disabled = false;
+document.getElementById('btnAgregar').textContent = 'Agregar Movimiento';
 }
 
-// ── ELIMINAR ──────────────────────────────
 async function eliminar(id) {
-  const idx = estado.movimientos.findIndex(m => m.id === id);
-  if (idx <= 0) return;
-  estado.movimientos.splice(idx, 1);
-  let s = estado.movimientos[0].saldo;
-  for (let i = 1; i < estado.movimientos.length; i++) {
-    const m = estado.movimientos[i];
-    s = m.tipo === 'entrada' ? s + m.monto : s - m.monto;
-    m.saldo = s;
-  }
-  await guardarEnSheets();
-  render();
+const idx = estado.movimientos.findIndex(m => m.id === id);
+if (idx <= 0) return;
+estado.movimientos.splice(idx, 1);
+let s = estado.movimientos[0].saldo;
+for (let i = 1; i < estado.movimientos.length; i++) {
+const m = estado.movimientos[i];
+s = m.tipo === 'entrada' ? s + m.monto : s - m.monto;
+m.saldo = s;
+}
+await guardarEnSheets();
+render();
 }
 
-// ── CIERRE ────────────────────────────────
+async function toggleProcesado(id) {
+const m = estado.movimientos.find(m => m.id === id);
+if (!m) return;
+m.procesado = !m.procesado;
+await guardarEnSheets();
+render();
+}
+
 async function cerrarDia() {
-  const saldo = getSaldo();
-  if (!confirm('¿Cerrar la caja de hoy?\nSaldo final: ' + fmt(saldo))) return;
-  let ent = 0, sal = 0;
-  estado.movimientos.forEach(m => { if (m.tipo === 'entrada') ent += m.monto; if (m.tipo === 'salida') sal += m.monto; });
-  estado.historial.push({
-    fecha: estado.fechaActual,
-    movimientos: [...estado.movimientos],
-    saldoFinal: saldo,
-    totalEntradas: ent,
-    totalSalidas: sal
-  });
-  estado.cajaAbierta = false;
-  await guardarEnSheets();
-  render();
+const saldo = getSaldo();
+if (!confirm('¿Cerrar la caja de hoy?\nSaldo final: ' + fmt(saldo))) return;
+let ent = 0, sal = 0;
+estado.movimientos.forEach(m => { if (m.tipo === 'entrada') ent += m.monto; if (m.tipo === 'salida') sal += m.monto; });
+estado.historial.push({
+fecha: estado.fechaActual,
+movimientos: [...estado.movimientos],
+saldoFinal: saldo,
+totalEntradas: ent,
+totalSalidas: sal
+});
+estado.cajaAbierta = false;
+await guardarEnSheets();
+render();
 }
 
-// ── RESET ─────────────────────────────────
 async function confirmarReset() {
-  if (confirm('¿Borrar TODO el historial y reiniciar?')) {
-    estado = null;
-    localStorage.removeItem('cajaEstado3');
-    await guardarEnSheets();
-    document.getElementById('fechaAp').value = hoy();
-    document.getElementById('modalTitulo').textContent = 'Abrir Caja';
-    document.getElementById('modalSub').textContent = 'Ingresa el monto inicial y la fecha.';
-    document.getElementById('infoAnterior').style.display = 'none';
-    document.getElementById('lblMonto').textContent = 'Monto inicial';
-    document.getElementById('montoAp').value = '';
-    document.getElementById('modalApertura').style.display = 'flex';
-  }
+if (confirm('¿Borrar TODO el historial y reiniciar?')) {
+estado = null;
+localStorage.removeItem('cajaEstado3');
+await guardarEnSheets();
+document.getElementById('fechaAp').value = hoy();
+document.getElementById('modalTitulo').textContent = 'Abrir Caja';
+document.getElementById('modalSub').textContent = 'Ingresa el monto inicial y la fecha.';
+document.getElementById('infoAnterior').style.display = 'none';
+document.getElementById('lblMonto').textContent = 'Monto inicial';
+document.getElementById('montoAp').value = '';
+document.getElementById('modalApertura').style.display = 'flex';
+}
 }
 
-// ── VISTAS ────────────────────────────────
+// ── TICKET ────────────────────────────────
+function imprimirTicket(id) {
+const m = estado.movimientos.find(m => m.id === id);
+if (!m) return;
+const ticket = document.getElementById('ticketPrint');
+ticket.innerHTML = `
+<div class="ticket-header">
+<h2>💵 CAJA DIARIA</h2>
+<div>${fmtF(m.fecha)}</div>
+<div style="font-size:10px;color:#666">Ticket #${m.id.toString().slice(-6)}</div>
+</div>
+<div class="ticket-row"><span>Concepto:</span><span>${m.desc}</span></div>
+<div class="ticket-row"><span>Tipo:</span><span>${m.tipo.toUpperCase()}</span></div>
+<div class="ticket-row"><span>Monto:</span><span>${m.tipo === 'salida' ? '-' : '+'}${fmt(m.monto)}</span></div>
+<div class="ticket-row total"><span>Saldo caja:</span><span>${fmt(m.saldo)}</span></div>
+${m.procesado ? '<div style="text-align:center;color:green;font-weight:700;margin-top:8px">✅ PROCESADO</div>' : ''}
+<div class="ticket-footer">Caja Diaria — ${new Date().toLocaleString('es')}</div>
+`;
+ticket.style.display = 'block';
+window.print();
+ticket.style.display = 'none';
+}
+
+function imprimirDia(idx) {
+const d = estado.historial[idx];
+if (!d) return;
+const ticket = document.getElementById('ticketPrint');
+ticket.innerHTML = `
+<div class="ticket-header">
+<h2>💵 CAJA DIARIA</h2>
+<div>Cierre: ${fmtF(d.fecha)}</div>
+</div>
+${d.movimientos.map(m => `
+<div class="ticket-row">
+<span>${m.desc}</span>
+<span>${m.tipo === 'salida' ? '-' : '+'}${fmt(m.monto)}</span>
+</div>
+`).join('')}
+<div class="ticket-row total"><span>Entradas:</span><span style="color:green">${fmt(d.totalEntradas)}</span></div>
+<div class="ticket-row"><span>Salidas:</span><span style="color:red">${fmt(d.totalSalidas)}</span></div>
+<div class="ticket-row total"><span>Saldo Final:</span><span>${fmt(d.saldoFinal)}</span></div>
+<div class="ticket-footer">Caja Diaria — ${new Date().toLocaleString('es')}</div>
+`;
+ticket.style.display = 'block';
+window.print();
+ticket.style.display = 'none';
+}
+
 function irVista(v, btn) {
-  document.querySelectorAll('.vista').forEach(el => el.classList.remove('activa'));
-  document.querySelectorAll('.tab').forEach(el => el.classList.remove('activo'));
-  document.getElementById('vista' + v.charAt(0).toUpperCase() + v.slice(1)).classList.add('activa');
-  btn.classList.add('activo');
-  if (v === 'historial') renderHistorial();
+document.querySelectorAll('.vista').forEach(el => el.classList.remove('activa'));
+document.querySelectorAll('.tab').forEach(el => el.classList.remove('activo'));
+document.getElementById('vista' + v.charAt(0).toUpperCase() + v.slice(1)).classList.add('activa');
+btn.classList.add('activo');
+if (v === 'historial') renderHistorial();
 }
 
-// ── RENDER HOY ────────────────────────────
 function render() {
-  if (!estado) return;
-  const abierta = estado.cajaAbierta;
-  const saldo = getSaldo();
+if (!estado) return;
+const abierta = estado.cajaAbierta;
+const saldo = getSaldo();
+document.getElementById('headerFecha').textContent = fmtF(estado.fechaActual);
+const badge = document.getElementById('statusBadge');
+badge.className = 'status-badge ' + (abierta ? 'abierta' : 'cerrada');
+document.getElementById('statusTxt').textContent = (abierta ? '● ABIERTA · ' : '● CERRADA · ') + fmtF(estado.fechaActual);
+document.getElementById('saldoDisplay').textContent = fmt(saldo);
+document.getElementById('saldoDisplay').style.color = saldo < 0 ? 'var(--rojo)' : 'var(--verde)';
+const ini = estado.movimientos[0];
+document.getElementById('saldoSub').textContent = 'Monto de apertura: ' + fmt(ini ? ini.monto : 0);
+let ent = 0, sal = 0;
+estado.movimientos.forEach(m => { if (m.tipo === 'entrada') ent += m.monto; if (m.tipo === 'salida') sal += m.monto; });
+document.getElementById('totalEntradas').textContent = fmt(ent);
+document.getElementById('totalSalidas').textContent = fmt(sal);
+document.getElementById('totalMovs').textContent = estado.movimientos.length;
+document.getElementById('seccionForm').style.display = abierta ? 'block' : 'none';
+document.getElementById('seccionCerrada').style.display = abierta ? 'none' : 'block';
 
-  document.getElementById('headerFecha').textContent = fmtF(estado.fechaActual);
-  const badge = document.getElementById('statusBadge');
-  badge.className = 'status-badge ' + (abierta ? 'abierta' : 'cerrada');
-  document.getElementById('statusTxt').textContent = (abierta ? '● ABIERTA · ' : '● CERRADA · ') + fmtF(estado.fechaActual);
-
-  document.getElementById('saldoDisplay').textContent = fmt(saldo);
-  document.getElementById('saldoDisplay').style.color = saldo < 0 ? 'var(--rojo)' : 'var(--verde)';
-  const ini = estado.movimientos[0];
-  document.getElementById('saldoSub').textContent = 'Monto de apertura: ' + fmt(ini ? ini.monto : 0);
-
-  let ent = 0, sal = 0;
-  estado.movimientos.forEach(m => { if (m.tipo === 'entrada') ent += m.monto; if (m.tipo === 'salida') sal += m.monto; });
-  document.getElementById('totalEntradas').textContent = fmt(ent);
-  document.getElementById('totalSalidas').textContent = fmt(sal);
-  document.getElementById('totalMovs').textContent = estado.movimientos.length;
-
-  document.getElementById('seccionForm').style.display = abierta ? 'block' : 'none';
-  document.getElementById('seccionCerrada').style.display = abierta ? 'none' : 'block';
-
-  const lista = document.getElementById('listaMovimientos');
-  if (!estado.movimientos.length) {
-    lista.innerHTML = '<div class="vacio"><div class="emoji">📭</div>Sin movimientos</div>';
-    return;
-  }
-  lista.innerHTML = [...estado.movimientos].reverse().map(m => `
-    <div class="movimiento">
-      <div class="mov-icono ${m.tipo}">${m.tipo === 'entrada' ? '⬆️' : m.tipo === 'salida' ? '⬇️' : '🔓'}</div>
-      <div class="mov-info">
-        <div class="mov-desc">${m.desc}</div>
-        <div class="mov-tipo">${m.tipo.toUpperCase()}</div>
-      </div>
-      <div style="text-align:right">
-        <div class="mov-monto ${m.tipo}">${m.tipo === 'salida' ? '-' : '+'}${fmt(m.monto)}</div>
-        <div class="mov-saldo">Saldo: ${fmt(m.saldo)}</div>
-      </div>
-      ${(m.tipo !== 'inicio' && abierta) ? `<button class="btn-del" onclick="eliminar(${m.id})">✕</button>` : ''}
-    </div>
-  `).join('');
+const lista = document.getElementById('listaMovimientos');
+if (!estado.movimientos.length) {
+lista.innerHTML = '<div class="vacio"><div class="emoji">📭</div>Sin movimientos</div>';
+return;
+}
+lista.innerHTML = [...estado.movimientos].reverse().map(m => `
+<div class="movimiento ${m.procesado ? 'procesado' : ''}">
+${m.tipo !== 'inicio' ? `
+<div class="mov-check ${m.procesado ? 'checked' : ''}" onclick="toggleProcesado(${m.id})" title="Marcar como procesado">
+${m.procesado ? '✓' : ''}
+</div>
+` : '<div style="width:22px;flex-shrink:0"></div>'}
+${m.procesado ? '<div class="procesado-label">PROCESADO</div>' : ''}
+<div class="mov-icono ${m.tipo}">${m.tipo === 'entrada' ? '⬆️' : m.tipo === 'salida' ? '⬇️' : '🔓'}</div>
+<div class="mov-info">
+<div class="mov-desc">${m.desc}</div>
+<div class="mov-tipo">${m.tipo.toUpperCase()}</div>
+</div>
+<div style="text-align:right">
+<div class="mov-monto ${m.tipo}">${m.tipo === 'salida' ? '-' : '+'}${fmt(m.monto)}</div>
+<div class="mov-saldo">Saldo: ${fmt(m.saldo)}</div>
+</div>
+<div class="mov-acciones">
+<button class="btn-ticket" onclick="imprimirTicket(${m.id})" title="Imprimir ticket">🖨️</button>
+${(m.tipo !== 'inicio' && abierta) ? `<button class="btn-del" onclick="eliminar(${m.id})" title="Eliminar">✕</button>` : ''}
+</div>
+</div>
+`).join('');
 }
 
-// ── RENDER HISTORIAL ──────────────────────
 function renderHistorial() {
-  const lista = document.getElementById('listaHistorial');
-  if (!estado || !estado.historial.length) {
-    lista.innerHTML = '<div class="vacio"><div class="emoji">📂</div>Sin cierres registrados aún</div>';
-    return;
-  }
-  lista.innerHTML = [...estado.historial].reverse().map((d, i) => `
-    <div class="dia-card">
-      <div class="dia-head" onclick="toggleDia(${i})">
-        <div>
-          <div class="dia-fecha">📅 ${fmtF(d.fecha)}</div>
-          <div class="dia-info">${d.movimientos.length} movs · Inicio: ${fmt(d.movimientos[0]?.monto || 0)}</div>
-        </div>
-        <div style="display:flex;align-items:center">
-          <div class="dia-saldo-final" style="color:${d.saldoFinal < 0 ? 'var(--rojo)' : 'var(--verde)'}">${fmt(d.saldoFinal)}</div>
-          <div class="dia-chevron" id="chev-${i}">▼</div>
-        </div>
-      </div>
-      <div class="dia-movs" id="diaMovs-${i}">
-        ${d.movimientos.map(m => `
-          <div class="dia-mov-row">
-            <div style="font-size:13px">${m.tipo === 'entrada' ? '⬆️' : m.tipo === 'salida' ? '⬇️' : '🔓'}</div>
-            <div class="dia-mov-desc">${m.desc}</div>
-            <div class="dia-mov-monto" style="color:${m.tipo === 'entrada' ? 'var(--verde)' : m.tipo === 'salida' ? 'var(--rojo)' : 'var(--oro)'}">${m.tipo === 'salida' ? '-' : '+'}${fmt(m.monto)}</div>
-            <div class="mov-saldo">${fmt(m.saldo)}</div>
-          </div>
-        `).join('')}
-      </div>
-      <div class="dia-stats">
-        <div class="dia-stat">Entradas: <span style="color:var(--verde);font-weight:700">${fmt(d.totalEntradas)}</span></div>
-        <div class="dia-stat">Salidas: <span style="color:var(--rojo);font-weight:700">${fmt(d.totalSalidas)}</span></div>
-        <div class="dia-stat">Neto: <span style="color:var(--oro);font-weight:700">${fmt(d.totalEntradas - d.totalSalidas)}</span></div>
-      </div>
-    </div>
-  `).join('');
+const lista = document.getElementById('listaHistorial');
+if (!estado || !estado.historial.length) {
+lista.innerHTML = '<div class="vacio"><div class="emoji">📂</div>Sin cierres registrados aún</div>';
+return;
+}
+lista.innerHTML = [...estado.historial].reverse().map((d, i) => {
+const realIdx = estado.historial.length - 1 - i;
+return `
+<div class="dia-card">
+<div class="dia-head" onclick="toggleDia(${i})">
+<div>
+<div class="dia-fecha">📅 ${fmtF(d.fecha)}</div>
+<div class="dia-info">${d.movimientos.length} movs · Inicio: ${fmt(d.movimientos[0]?.monto || 0)}</div>
+</div>
+<div style="display:flex;align-items:center;gap:8px">
+<button class="btn-print-dia" onclick="event.stopPropagation();imprimirDia(${realIdx})">🖨️ Imprimir</button>
+<div class="dia-saldo-final" style="color:${d.saldoFinal < 0 ? 'var(--rojo)' : 'var(--verde)'}">${fmt(d.saldoFinal)}</div>
+<div class="dia-chevron" id="chev-${i}">▼</div>
+</div>
+</div>
+<div class="dia-movs" id="diaMovs-${i}">
+${d.movimientos.map(m => `
+<div class="dia-mov-row">
+<div style="font-size:13px">${m.tipo === 'entrada' ? '⬆️' : m.tipo === 'salida' ? '⬇️' : '🔓'}</div>
+<div class="dia-mov-desc">${m.desc} ${m.procesado ? '✅' : ''}</div>
+<div class="dia-mov-monto" style="color:${m.tipo === 'entrada' ? 'var(--verde)' : m.tipo === 'salida' ? 'var(--rojo)' : 'var(--oro)'}">${m.tipo === 'salida' ? '-' : '+'}${fmt(m.monto)}</div>
+<div class="mov-saldo">${fmt(m.saldo)}</div>
+</div>
+`).join('')}
+</div>
+<div class="dia-stats">
+<div class="dia-stat">Entradas: <span style="color:var(--verde);font-weight:700">${fmt(d.totalEntradas)}</span></div>
+<div class="dia-stat">Salidas: <span style="color:var(--rojo);font-weight:700">${fmt(d.totalSalidas)}</span></div>
+<div class="dia-stat">Neto: <span style="color:var(--oro);font-weight:700">${fmt(d.totalEntradas - d.totalSalidas)}</span></div>
+</div>
+</div>
+`}).join('');
 }
 
 function toggleDia(i) {
-  const el = document.getElementById('diaMovs-' + i);
-  const chev = document.getElementById('chev-' + i);
-  const open = el.classList.toggle('abierto');
-  chev.textContent = open ? '▲' : '▼';
+const el = document.getElementById('diaMovs-' + i);
+const chev = document.getElementById('chev-' + i);
+const open = el.classList.toggle('abierto');
+chev.textContent = open ? '▲' : '▼';
 }
 </script>
 
