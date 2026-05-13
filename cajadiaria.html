@@ -457,7 +457,7 @@ var m = estado.movimientos.find(function(x){ return x.id === id; });
 if (!m) return;
 var ticket = document.getElementById('ticketPrint');
 var html = '<div class="ticket-header">';
-html += '<h2>CAJA DIARIA</h2>';
+html += '<h2>💵 YH</h2>';
 html += '<div>' + fmtF(m.fecha) + '</div>';
 html += '<div style="font-size:10px;color:#666">Ticket #' + m.id.toString().slice(-6) + '</div>';
 html += '</div>';
@@ -478,7 +478,7 @@ var d = estado.historial[idx];
 if (!d) return;
 var ticket = document.getElementById('ticketPrint');
 var html = '<div class="ticket-header">';
-html += '<h2>CAJA DIARIA</h2>';
+html += '<h2>💵 YH</h2>';
 html += '<div>Cierre: ' + fmtF(d.fecha) + '</div>';
 html += '</div>';
 d.movimientos.forEach(function(m){
