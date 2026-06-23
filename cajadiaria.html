@@ -222,8 +222,9 @@
 <!-- SYNC BAR -->
 <div class="sync-bar">
   <div class="sync-dot cargando" id="syncDot"></div>
-  <div class="sync-txt" id="syncTxt">Conectando con Google Sheets...</div>
-  <button class="sync-btn" onclick="sincronizar()">↺ Sync</button>
+  <div class="sync-txt" id="syncTxt">Conectando...</div>
+  <button class="sync-btn" style="color:#00C27C;border-color:#00C27C" onclick="subirASheets()">⬆️ Subir</button>
+  <button class="sync-btn" style="color:#4D9FFF;border-color:#4D9FFF" onclick="sincronizar()">⬇️ Bajar</button>
 </div>
 
 <!-- TABS -->
@@ -342,6 +343,13 @@ async function guardarEnSheets() {
     setSyncEstado('error', 'Error al guardar — guardado localmente');
   }
   guardando = false;
+}
+
+async function subirASheets() {
+  if (!estado) { alert('No hay datos para subir'); return; }
+  if (!confirm('¿Subir los datos actuales a Google Sheets? Esto reemplazará lo que hay en Sheets.')) return;
+  await guardarEnSheets();
+  alert('Datos subidos a Google Sheets ✓');
 }
 
 async function sincronizar() {
